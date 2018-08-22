@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <string name="assigned_name">Assignee Name</string>
+    <string name="assignee_email">Assignee Email</string>
+    <string name="task_name">Task Name</string>
+    <string name="create_task">Create task</string>
+    <string name="invalid_input">Invalid Input</string>
+    <string name="all">All</string>
+    <string name="completed">Completed</string>
+    <string name="incompleted">Incompleted</string>
+    <string name="there_is_no_task_in_the_database">There is no task in the database</string>
+    <string name="task_id">Task ID:</string>
+    <string name="task_lbl">Task Name:</string>
+    <string name="task_email">Task Email:</string>
+    <string name="_lbl">Completed:</string>
+    <string name="complete_task">Complete Task</string>
+    <string name="send_email">Send Email</string>
+    <string name="assigned_to">Assigned to:</string>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="andplus.todoapp.ui.addtask.TaskCreationViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invalid_input"
+            android:textColor="#d50000"
+            android:textAlignment="center"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/etTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/task_name"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/tvAssiName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invalid_input"
+            android:textColor="#d50000"
+            android:textAlignment="center"
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/etAssigneeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/assigned_name"
+            android:layout_margin="8dp"
+            />
+
+        <TextView
+            android:id="@+id/tvAssigneeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/invalid_input"
+            android:textColor="#d50000"
+            android:textAlignment="center"
+            android:visibility="gone"
+            />
+        <EditText
+            android:id="@+id/etAssigneeEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/assignee_email"
+            android:layout_margin="8dp"
+            android:inputType="textEmailAddress"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/create_task"
+            android:onClick="@{() -> viewModel.onClickCreateTask()}"
+            />
+
+    </LinearLayout>
+
+</layout>
