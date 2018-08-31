@@ -1,7 +1,7 @@
 package andplus.todoapp.ui.detail;
 
 
-
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,7 @@ import andplus.todoapp.ui.base.BaseViewModel;
 import andplus.todoapp.ui.task.TaskFragment;
 import andplus.todoapp.ui.task.TaskViewModel;
 
-public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding,TaskDetailViewModel> implements TaskDetailNavigator {
+public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding, TaskDetailViewModel> implements TaskDetailNavigator {
 
     FragmentDetailBinding mFragmentDetailBinding;
 
@@ -34,10 +36,11 @@ public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding,TaskD
 
     private TaskDetailViewModel mTaskDetailViewModel;
 
+    private static final String EXTRA_CHANGE = "TaskDetailFragment.changes";
 
     public static Fragment newInstance(String id) {
         Bundle args = new Bundle();
-        args.putString(TaskFragment.ARGUMENT_TASK_ID,id);
+        args.putString(TaskFragment.ARGUMENT_TASK_ID, id);
         TaskDetailFragment fragment = new TaskDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -48,9 +51,9 @@ public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding,TaskD
         super.onCreate(savedInstanceState);
         mTaskDetailViewModel.setNavigator(this);
 
-         mTaskDetailViewModel.taskId.set((String) (getArguments() != null ? getArguments().get(TaskFragment.ARGUMENT_TASK_ID) : null));
+        mTaskDetailViewModel.taskId.set((String) (getArguments() != null ? getArguments().get(TaskFragment.ARGUMENT_TASK_ID) : null));
 
-         mTaskDetailViewModel.fetchSelectedTask(mTaskDetailViewModel.taskId.get());
+        mTaskDetailViewModel.fetchSelectedTask(mTaskDetailViewModel.taskId.get());
     }
 
     @Override
@@ -90,7 +93,9 @@ public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding,TaskD
 
     @Override
     public void completeTask() {
-
+        Toast.makeText(getBaseActivity(),"Task completed",Toast.LENGTH_LONG).show();
+        mFragmentDetailBinding.btnCompleteTask.setEnabled(false);
+        sendResult(Activity.RESULT_OK);
     }
 
     @Override
@@ -101,8 +106,19 @@ public class TaskDetailFragment extends BaseFragment<FragmentDetailBinding,TaskD
         mFragmentDetailBinding.taskEmail.setText(task.getAssigneeEmail());
         mFragmentDetailBinding.taskCompleted.setText(task.isCompleted() + "");
 
-        if(task.isCompleted()){
+        if (task.isCompleted()) {
             mFragmentDetailBinding.btnCompleteTask.setEnabled(false);
         }
+    }
+
+    private void sendResult(int resultCode) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_CHANGE, true);
+
+        getTargetFragment()
+                .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

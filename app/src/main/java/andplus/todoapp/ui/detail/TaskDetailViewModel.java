@@ -47,7 +47,7 @@ public class TaskDetailViewModel extends BaseViewModel<TaskDetailNavigator> {
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
                 .subscribe(tasks -> {
-
+                    getNavigator().completeTask();
                 }, throwable -> {
 
                 }));

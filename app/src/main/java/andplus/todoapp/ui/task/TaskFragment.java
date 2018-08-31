@@ -1,8 +1,10 @@
 package andplus.todoapp.ui.task;
 
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,6 +34,8 @@ import andplus.todoapp.ui.detail.TaskDetailFragment;
 public class TaskFragment extends BaseFragment<FragmentTaskBinding,TaskViewModel> implements TaskNavigator{
 
     public static final String ARGUMENT_TASK_ID = "TASK_ID";
+
+    private static final int REQUEST_CHANGE = 0;
 
     @Inject
     LinearLayoutManager mLayoutManager;
@@ -71,8 +75,24 @@ public class TaskFragment extends BaseFragment<FragmentTaskBinding,TaskViewModel
 
     @Override
     public void openTaskDetail(String id) {
+
+        TaskDetailFragment taskDetailFragment = (TaskDetailFragment) TaskDetailFragment.newInstance(id);
+        taskDetailFragment.setTargetFragment(this,REQUEST_CHANGE);
+
         getBaseActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                .replace(R.id.fragmentContainer,TaskDetailFragment.newInstance(id)).commit();
+                .replace(R.id.fragmentContainer,taskDetailFragment).commit();
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK){
+            return;
+        }
+
+        if (requestCode == REQUEST_CHANGE){
+            mTaskViewModel.fetchTasks();
+        }
     }
 
     @Override
